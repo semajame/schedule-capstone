@@ -17,20 +17,23 @@ export default defineComponent({
         plugins: [
           dayGridPlugin,
           timeGridPlugin,
+          multiMonthPlugin,
           interactionPlugin, // needed for dateClick
         ],
         headerToolbar: {
           left: "prev,next today",
           center: "title",
-          right: "multimonth,dayGridMonth,timeGridWeek,timeGridDay",
+          right: "multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay",
         },
         initialView: "timeGridWeek",
         // initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-        editable: true,
+        editable: false,
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
         weekends: true,
+        slotMinTime: "06:00:00",
+        allDaySlot: false,
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
@@ -59,7 +62,7 @@ export default defineComponent({
           title,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
-          allDay: selectInfo.allDay,
+          // allDay: selectInfo.allDay,
         });
       }
     },
@@ -92,31 +95,9 @@ export default defineComponent({
   </div>
 </template>
 
-<style lang="css">
-h2 {
-  margin: 0;
-  font-size: 16px;
-}
-
-ul {
-  margin: 0;
-  padding: 0 0 0 1.5em;
-}
-
-li {
-  margin: 1.5em 0;
-  padding: 0;
-}
-
-b {
-  /* used for event dates/times */
-  margin-right: 3px;
-}
-
+<style scoped>
 .demo-app {
   display: flex;
-  min-height: 100%;
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   font-size: 14px;
 }
 
@@ -133,12 +114,18 @@ b {
 
 .demo-app-main {
   flex-grow: 1;
+  height: 100%;
   padding: 3em;
+  padding-bottom: 0;
 }
 
 .fc {
   /* the calendar root */
   max-width: 1100px;
   margin: 0 auto;
+}
+
+.fc-scroller-harness {
+  overflow: hidden;
 }
 </style>

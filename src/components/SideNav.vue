@@ -9,20 +9,47 @@
     </div>
     <nav>
       <ul>
-        <li>
-          <router-link to="/"> Home </router-link>
+        <li v-for="items in links" :key="items.name">
+          <router-link :to="{ name: items.name }" class="router__link">
+            <component :is="items.icon" />
+            {{ items.link }}
+          </router-link>
         </li>
-        <li>
-          <router-link to="/schedule"> Schedule </router-link>
-        </li>
-        <li></li>
       </ul>
     </nav>
   </section>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { h } from "vue";
+
+const links = [
+  {
+    name: "Dashboard",
+    link: "Dashboard",
+    icon: h("i", { class: "fi fi-rr-home" }),
+  },
+
+  {
+    name: "Schedule",
+    link: "Schedule",
+    icon: h("i", { class: "fi fi-rr-calendar-lines" }),
+  },
+];
 </script>
 
-<style></style>
+<style scoped>
+nav {
+  margin-top: 3rem;
+}
+.router__link {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.icon {
+  color: white;
+}
+</style>
